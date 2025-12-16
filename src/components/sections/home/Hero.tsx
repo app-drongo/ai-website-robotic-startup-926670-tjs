@@ -62,122 +62,111 @@ export default function Hero(props: HeroProps) {
   };
 
   return (
-    <section id="hero" className="bg-background text-foreground py-20 lg:py-32 overflow-hidden">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
-          {/* Content Column */}
-          <div
-            className={`space-y-8 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-          >
-            {/* Badge */}
-            <div className="flex justify-start">
-              <Badge
-                variant="secondary"
-                className="bg-primary/10 text-primary border-primary/20 px-4 py-2"
-              >
-                <span data-editable="badge">{config.badge}</span>
-              </Badge>
-            </div>
+    <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src={config.heroImageUrl}
+          alt={config.heroImageAlt}
+          fill
+          className="object-cover"
+          data-editable-src="heroImageUrl"
+          priority
+        />
+        {/* Dark overlay for better text readability */}
+        <div className="absolute inset-0 bg-black/60" />
+      </div>
 
-            {/* Headlines */}
-            <div className="space-y-6">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight">
-                <span
-                  data-editable="headline"
-                  className="bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent"
-                >
-                  {config.headline}
-                </span>
-              </h1>
-
-              <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl">
-                <span data-editable="subheadline">{config.subheadline}</span>
-              </p>
-
-              <p className="text-base text-muted-foreground leading-relaxed max-w-xl">
-                <span data-editable="description">{config.description}</span>
-              </p>
-            </div>
-
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button
-                size="lg"
-                className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 group"
-                onClick={handlePrimaryCTA}
-                data-editable-href="ctaHref"
-                data-href={config.ctaHref}
-              >
-                <span data-editable="ctaText">{config.ctaText}</span>
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
-
-              <Button
-                variant="outline"
-                size="lg"
-                className="border-border hover:bg-accent hover:text-accent-foreground transition-all duration-300"
-                onClick={handleSecondaryCTA}
-                data-editable-href="secondaryCtaHref"
-                data-href={config.secondaryCtaHref}
-              >
-                <Play className="mr-2 h-5 w-5" />
-                <span data-editable="secondaryCtaText">{config.secondaryCtaText}</span>
-              </Button>
-            </div>
-
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-6 pt-8">
-              {config.stats.map((stat, idx) => (
-                <Card
-                  key={idx}
-                  className="bg-card text-card-foreground border-border hover:shadow-lg transition-all duration-300"
-                >
-                  <CardContent className="p-4 text-center">
-                    <div className="flex justify-center mb-2 text-primary">
-                      {getStatIcon(stat.icon)}
-                    </div>
-                    <div className="text-2xl font-bold">
-                      <span data-editable={`stats[${idx}].value`}>{stat.value}</span>
-                    </div>
-                    <div className="text-sm text-muted-foreground">
-                      <span data-editable={`stats[${idx}].label`}>{stat.label}</span>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+      {/* Content */}
+      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div
+          className={`space-y-8 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+        >
+          {/* Badge */}
+          <div className="flex justify-center">
+            <Badge
+              variant="secondary"
+              className="bg-primary/20 text-white border-primary/30 px-4 py-2 backdrop-blur-sm"
+            >
+              <span data-editable="badge">{config.badge}</span>
+            </Badge>
           </div>
 
-          {/* Image Column */}
-          <div
-            className={`relative transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`}
-          >
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-              <Image
-                src={config.heroImageUrl}
-                alt={config.heroImageAlt}
-                width={800}
-                height={600}
-                className="w-full h-auto object-cover"
-                data-editable-src="heroImageUrl"
-                priority
-              />
+          {/* Headlines */}
+          <div className="space-y-6 max-w-4xl mx-auto">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight text-white">
+              <span
+                data-editable="headline"
+                className="bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent"
+              >
+                {config.headline}
+              </span>
+            </h1>
 
-              {/* Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent" />
+            <p className="text-lg sm:text-xl text-gray-200 leading-relaxed max-w-3xl mx-auto">
+              <span data-editable="subheadline">{config.subheadline}</span>
+            </p>
 
-              {/* Floating Elements */}
-              <div className="absolute top-6 right-6 bg-background/90 backdrop-blur-sm rounded-lg p-3 shadow-lg">
-                <div className="flex items-center space-x-2">
-                  <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
-                  <span className="text-sm font-medium">AI Active</span>
-                </div>
-              </div>
-            </div>
+            <p className="text-base text-gray-300 leading-relaxed max-w-2xl mx-auto">
+              <span data-editable="description">{config.description}</span>
+            </p>
+          </div>
 
-            {/* Background Decoration */}
-            <div className="absolute -top-4 -right-4 w-72 h-72 bg-primary/10 rounded-full blur-3xl -z-10" />
-            <div className="absolute -bottom-8 -left-8 w-96 h-96 bg-accent/10 rounded-full blur-3xl -z-10" />
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button
+              size="lg"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 group"
+              onClick={handlePrimaryCTA}
+              data-editable-href="ctaHref"
+              data-href={config.ctaHref}
+            >
+              <span data-editable="ctaText">{config.ctaText}</span>
+              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+            </Button>
+
+            <Button
+              variant="outline"
+              size="lg"
+              className="border-white/30 text-white hover:bg-white/10 hover:text-white backdrop-blur-sm transition-all duration-300"
+              onClick={handleSecondaryCTA}
+              data-editable-href="secondaryCtaHref"
+              data-href={config.secondaryCtaHref}
+            >
+              <Play className="mr-2 h-5 w-5" />
+              <span data-editable="secondaryCtaText">{config.secondaryCtaText}</span>
+            </Button>
+          </div>
+
+          {/* Stats */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-8 max-w-2xl mx-auto">
+            {config.stats.map((stat, idx) => (
+              <Card
+                key={idx}
+                className="bg-white/10 text-white border-white/20 hover:bg-white/20 backdrop-blur-sm transition-all duration-300"
+              >
+                <CardContent className="p-4 text-center">
+                  <div className="flex justify-center mb-2 text-primary">
+                    {getStatIcon(stat.icon)}
+                  </div>
+                  <div className="text-2xl font-bold">
+                    <span data-editable={`stats[${idx}].value`}>{stat.value}</span>
+                  </div>
+                  <div className="text-sm text-gray-300">
+                    <span data-editable={`stats[${idx}].label`}>{stat.label}</span>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Scroll indicator */}
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10">
+        <div className="animate-bounce">
+          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-white/70 rounded-full mt-2 animate-pulse" />
           </div>
         </div>
       </div>
